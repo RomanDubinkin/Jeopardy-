@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Game() {
+function Game({title, answer, price, question}) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   return (
@@ -33,23 +34,15 @@ function Game() {
     <Grid container style={{ textAlign: 'center', marginTop: '4vh', marginLeft: '4vh', alignItems: 'center' }}>
       <Card className={classes.root} variant="outlined">
         <CardContent>
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
-            Word of the Day
-        </Typography>
           <Typography variant="h5" component="h2">
-            be{bull}nev{bull}o{bull}lent
-        </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            adjective
+          {question}
         </Typography>
           <Typography variant="body2" component="p">
-            well meaning and kindly.
-          <br />
-            {'"a benevolent smile"'}
+            <TextField id="standard-basic" label="Answer" />
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Learn More</Button>
+          <Button size="small">Add!</Button>
         </CardActions>
       </Card>
     </Grid>
