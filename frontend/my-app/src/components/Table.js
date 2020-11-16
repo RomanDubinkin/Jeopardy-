@@ -1,22 +1,18 @@
 import React, { memo } from 'react';
-import { useSelector } from 'react-redux';
+import Theme from './Theme';
+import Grid from '@material-ui/core/Grid';
 
-import TodoItems from './TodoItems';
-import styles from '../css/list.module.css'
+const Table = ({ themes }) => {
 
-const TodoList = () => {
 
-  const todos = useSelector((store) => store.todos); //забираем данные из внешнего стора
 
   return (
-    <div className={styles.listwrapper}>
-      <ol>
-        {todos.map((todo) => (
-          <Theme key={todo.id} todo={todo} />
-        ))}
-      </ol>
-    </div>
+    <Grid container spacing={3}>
+      {themes.map((theme) => (
+        <Theme theme={theme} />
+      ))}
+    </Grid>
   );
 };
 
-export default memo(TodoList);
+export default memo(Table);

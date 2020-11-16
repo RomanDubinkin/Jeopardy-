@@ -1,59 +1,23 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { doneTodoAC, delTodoAC, toggleEditAC } from "../store/actions";
-import Item from './Item';
-import Entry from './itemEntry'
+import Question from './Question';
+import Grid from '@material-ui/core/Grid';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-const TodoItem = ({ todo }) => {
-  const dispatch = useDispatch();
-
-  const delTodo = async (id) => {
-    const response = await fetch(`http://localhost:3100/delete/${id}`, {
-      method: 'GET',
-    });
-    const data = await response.json();
-    console.log('>>>>>> fetch delete request: ', data);
-    dispatch(delTodoAC(id))
-  };
-
-
+const Theme = ({ theme }) => {
   return (
-    <div style={{ ...styles.list, textDecoration: todo.done ? "line-through" : "none" }}>
-      {!todo.edit && <div style={styles.wrap}>}
-        <Header todo={todo} />
-        <div className={styles.listwrapper}>
-          <ol>
-            {todos.map((todo) => (
-              <Question key={todo.id} todo={todo} />
-            ))}
-          </ol>
-        </div>
-      {todo.edit && <Entry todo={todo} />}
-    </div>
+    <Grid container style={{ textAlign: 'center', marginTop: '2vh', alignItems: 'center' }}>
+      <Grid item xs={4}>
+        {theme.title}
+      </Grid>
+      <Grid item xs={8}>
+        <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group">
+          {theme.status.map((el, i) => (
+            <Question title={theme.title} price={200 * (1 + i)} state={el} />
+          ))}
+        </ButtonGroup>
+      </Grid>
+    </Grid >
   );
 };
 
-const styles = {
-  wrap: {
-    display: "flex",
-    justifyContent: 'space-between',
-    flexWrap: 'nowrap'
-  },
-  list: {
-    lineHeight: "1.8",
-    borderBottom: "2px solid white",
-  },
-  doneButton: {
-    color: "green",
-  },
-  delButton: {
-    color: "red",
-    marginLeft: 2
-  },
-  baseButton: {
-    color: "black",
-    marginLeft: 2
-  },
-};
-
-export default TodoItem;
+export default Theme;
