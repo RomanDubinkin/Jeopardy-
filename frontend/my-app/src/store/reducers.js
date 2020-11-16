@@ -1,4 +1,4 @@
-import { START_GAME } from './types'
+import { START_GAME, INIT } from './types'
 
 const initialState = {
   users: [{ user: 'roman', score: 0 }],
@@ -12,13 +12,21 @@ export const reducers = (state = initialState, action) => {
   //debugger;
   switch (action.type) {
 
-      case START_GAME:
-        const newGame = { status:true};
-        return {...state, game: newGame};
+    case START_GAME:
+      const startGame = { status: true, ...action.payload };
+      const startThemes = state.themes.map((theme) => {
+        if (theme.title === action.payload.title) {
+          theme.status[Math.round(action.payload.price / 200 - 1)] = false
+        }
+        return theme;
+      });
+      return { ...state, game: startGame, themes: startThemes };
 
-    // case INIT:
-    //   const initTodos = [...action.payload.todos];
-    //   return { ...state, todos: initTodos };
+    case INIT:
+      const initThemes = action.payload.map((el) => {
+        return { status: new Array(5).fill(true), title: el.title }
+      });
+      return { ...state, themes: initThemes };
 
     // case DONE_TODO:
     //   const newTodos = state.todos.map((todo) => {

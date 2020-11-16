@@ -1,6 +1,8 @@
-import { START_GAME } from "./types";
+import { START_GAME, INIT } from "./types";
 
-export default () => ({ type: START_GAME });
+const startGame = (obj) => ({ type: START_GAME, payload: obj });
+
+export default startGame;
 
 // export const delAllTodosAC = () => ({ type: DEL_ALL_TODOS });
 
@@ -12,4 +14,4 @@ export default () => ({ type: START_GAME });
 
 // export const toggleEditAndSaveAC = ({ id, value }) => ({ type: TOGGLE_SAVE, payload: { id, value } });
 
-// export const initAC = (todos) => ({ type: INIT, payload: todos });
+export const initStore = (data) => ({ type: INIT, payload: data });
