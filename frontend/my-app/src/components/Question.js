@@ -18,10 +18,9 @@ function Question({ price, state, title }) {
 
   return (
     // store is a reserved word!!!!
-    <div>
-      {state && <Button onClick={handleClick} >{price}</Button>}
-      {!state && <Button onClick={handleClick} >{price}</Button>}
-    </div>
+
+    <Button onClick={handleClick} >{state && price}</Button>
+
   );
 }
 
