@@ -1,10 +1,25 @@
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Table from '../components/Table';
 import Game from '../components/Game';
 import Container from '@material-ui/core/Container';
+import { initStore } from "../store/actions";
 
 const Main = () => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    async function getData() {
+      const response = await fetch('http://localhost:3100/game', {
+        method: 'GET',
+      });
+      const data = await response.json();
+      console.log('>>>> init data: ', data);
+      dispatch(initStore(data));
+    };
+    getData();
+  }, []);
+
   const game = useSelector((store) => store.game);
   const themes = useSelector((store) => store.themes);
   return (
