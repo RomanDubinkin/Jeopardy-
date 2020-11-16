@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Timer from './Timer';
 
 const useStyles = makeStyles({
   root: {
@@ -27,11 +28,12 @@ const useStyles = makeStyles({
 });
 
 function Game({title, answer, price, question}) {
+
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+ 
   return (
     // store is a reserved word!!!!
-    <Grid container style={{ textAlign: 'center', marginTop: '4vh', marginLeft: '4vh', alignItems: 'center' }}>
+    <Grid container style={{ textAlign: 'center', marginTop: '4vh',   marginLeft: '4vh',alignItems: 'center' }}>
       <Card className={classes.root} variant="outlined">
         <CardContent>
           <Typography variant="h5" component="h2">
@@ -42,7 +44,8 @@ function Game({title, answer, price, question}) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Add!</Button>
+          <div style ={{}}><Timer /></div>
+          <div><Button size="small">Add!</Button></div>
         </CardActions>
       </Card>
     </Grid>
