@@ -1,0 +1,4 @@
+PORT=3100
+DB_HOST=keti
+DB_NAME=jeopardy
+DB_PASSWORD=superuser
