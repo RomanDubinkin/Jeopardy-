@@ -1,6 +1,6 @@
 import { START_GAME } from "./types";
 
-export default () => ({ type: START_GAME });
+export default (obj) => ({ type: START_GAME, payload: obj });
 
 // export const delAllTodosAC = () => ({ type: DEL_ALL_TODOS });
 
