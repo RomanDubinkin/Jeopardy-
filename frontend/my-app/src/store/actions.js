@@ -1,4 +1,4 @@
-import { START_GAME, INIT } from "./types";
+import { START_GAME, INIT, ANSWER } from "./types";
 
 const startGame = (obj) => ({ type: START_GAME, payload: obj });
 
@@ -14,4 +14,6 @@ export default startGame;
 
 // export const toggleEditAndSaveAC = ({ id, value }) => ({ type: TOGGLE_SAVE, payload: { id, value } });
 
-export const initStore = (data) => ({ type: INIT, payload: data });
+export const initStore = (data) => { console.log("checking on init>>>>>"); return { type: INIT, payload: data } };
+
+export const handleAnswer = (data) => { console.log('>>>handle Answer?'); return { type: ANSWER, payload: data } };
