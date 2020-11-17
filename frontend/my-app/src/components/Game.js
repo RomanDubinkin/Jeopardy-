@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Timer from './Timer';
 import { useDispatch } from 'react-redux';
-import { handleAnswer, initStore } from '../store/actions';
+import { handleAnswer } from '../store/actions';
 
 const useStyles = makeStyles({
   root: {
@@ -43,10 +43,10 @@ function Game({ title, answer, price, question }) {
     dispatch(handleAnswer(score));
 
   };
-  
+
   return (
     // store is a reserved word!!!!
-    <Grid container style={{ textAlign: 'center', marginTop: '4vh',   marginLeft: '4vh',alignItems: 'center' }}>
+    <Grid container style={{ textAlign: 'center', marginTop: '4vh', marginLeft: '4vh', alignItems: 'center' }}>
       <Card className={classes.root} variant="outlined">
         <CardContent>
           <Typography variant="h5" component="h2">
@@ -57,7 +57,7 @@ function Game({ title, answer, price, question }) {
           </Typography>
         </CardContent>
         <CardActions>
-          <div style ={{}}><Timer /></div>
+          <div style={{}}><Timer price={price}/></div>
           <Button onClick={handleClick} size="small">Add!</Button>
         </CardActions>
       </Card>
