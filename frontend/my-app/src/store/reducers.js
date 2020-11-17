@@ -1,4 +1,4 @@
-import { START_GAME, INIT, ANSWER } from './types'
+import { START_GAME, INIT, ANSWER, SIGNUP, ISAUTH } from './types'
 
 
 const initialState = {
@@ -38,6 +38,13 @@ export const reducers = (state = initialState, action) => {
       });
       const answerGame = { ...state.game, status: false }
       return { ...state, users: answerUsers, game: answerGame };
+
+    case SIGNUP:
+      return {...state, id: action.payload.id, login: action.payload.login, email: action.payload.email};
+
+    case ISAUTH:
+      return {...state, id: action.payload.id, login: action.payload.login, email: action.payload.email};
+
 
     // case DONE_TODO:
     //   const newTodos = state.todos.map((todo) => {

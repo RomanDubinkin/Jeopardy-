@@ -18,12 +18,11 @@ const Main = () => {
         method: 'GET',
       });
       const data = await response.json();
-      console.log('>>>> init data: ', data);
+      
       dispatch(initStore(data));
     };
     getData();
   }, []);
-
   ws.onmessage = (e) => {
   const data = JSON.parse(e.data);
   dispatch(func[data.func](data.args));

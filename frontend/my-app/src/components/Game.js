@@ -37,10 +37,7 @@ function Game({ title, answer, price, question }) {
     setText(event.target.value);
   }
   const handleClick = () => {
-    console.log('check handle click>>>>>!');
     const score = (-1 + 2 * (text === answer)) * price;
-    console.log('>>>>>>>price', score);
-    // setText('');
     ws.send(JSON.stringify({ func: 'handleAnswer', args: score }));
   };
 
@@ -59,7 +56,6 @@ function Game({ title, answer, price, question }) {
         <CardActions>
           <div style={{}}><Timer price={price} /></div>
           <Button onClick={handleClick} size="small">Add!</Button>
-
         </CardActions>
       </Card>
     </Grid>

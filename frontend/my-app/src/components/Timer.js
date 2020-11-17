@@ -11,9 +11,7 @@ function Timer({ price }) {
       ws.send(JSON.stringify({ func: 'handleAnswer', args: -price }));
     }
   }, [count]);
-
   return <h3>{count > 0 ? count : "time out"}</h3>
-
 };
 
 export default Timer
