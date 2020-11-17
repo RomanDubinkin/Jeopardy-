@@ -7,6 +7,7 @@ const path = require('path');
 const dbConnect = require('./db');
 const gameRouter = require('./routes/gameRouter')
 const createTable = require('./seed')
+const ws = require('ws');
 
 
 const cors = require('cors');
@@ -47,6 +48,13 @@ app.use((req, res, next) => {
 // app.use('/', userRouter);
 app.use('/game', gameRouter);
 
-app.listen(PORT, () => {
-  console.log('Server has been started on port: ', PORT);
+const clients = [];
+const httpsServer = app.listen(PORT);
+const wsServer = new ws.Server({ server: httpsServer });
+wsServer.on('connection', (client) => {
+  clients.push(client);
+  client.on('message', (data) => {
+    console.log(data);
+    clients.forEach((c) => c.send(data));
+  });
 });

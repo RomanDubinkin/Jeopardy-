@@ -7,10 +7,15 @@ function Timer({ price }) {
   const [count, setCount] = useState(20);
 
   useEffect(() => {
-    count >= 0 && setTimeout(() => setCount(count - 1), 1000)
+    if (count >= 0) {
+      setTimeout(() => setCount(count - 1), 1000)
+    } else {
+      dispatch(handleAnswer(-price));
+    }
   }, [count]);
 
-  return <h3>{count > 0 ? count : dispatch(handleAnswer(-price))}</h3>
+  return <h3>{count > 0 ? count : "time out"}</h3>
+
 };
 
 export default Timer

@@ -1,8 +1,9 @@
 import { START_GAME, INIT, ANSWER } from "./types";
 
-const startGame = (obj) => ({ type: START_GAME, payload: obj });
+// export default startGame;
 
-export default startGame;
+export const startGame = (obj) => ({ type: START_GAME, payload: obj });
+
 
 // export const delAllTodosAC = () => ({ type: DEL_ALL_TODOS });
 
