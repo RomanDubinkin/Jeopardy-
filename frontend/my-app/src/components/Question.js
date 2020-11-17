@@ -1,10 +1,9 @@
 import React from "react";
-import startGame from '../store/actions';
-import { useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import { wsContext } from '../screen/Main';
 
 function Question({ price, state, title }) {
-  const dispatch = useDispatch();
+  const ws = React.useContext(wsContext)
   const handleClick = async () => {
     if (state) {
       const response = await fetch(`http://localhost:3100/game/${title}`, {
@@ -13,8 +12,7 @@ function Question({ price, state, title }) {
       const data = await response.json();
       const index = data.question.findIndex((el) => el.price === price);
       const obj = { question: data.question[index].title, answer: data.question[index].answer };
-      console.log('>>>>>>> object to send is ', obj);
-      dispatch(startGame({ ...obj, title, price }));
+      ws.send(JSON.stringify({ func: 'startGame', args: { ...obj, title, price } }));
     }
   }
 

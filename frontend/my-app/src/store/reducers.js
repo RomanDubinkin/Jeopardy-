@@ -1,5 +1,6 @@
 import { START_GAME, INIT, ANSWER, SIGNUP, ISAUTH } from './types'
 
+
 const initialState = {
   users: [{ user: 'roman', score: 0 }],
   themes: [{ title: 'money', status: [true, true, true, true, true] }],
@@ -13,14 +14,15 @@ export const reducers = (state = initialState, action) => {
   switch (action.type) {
 
     case START_GAME:
-      const startGame = { status: true, ...action.payload };
+      console.log('>>>>>>>start game');
+      const initGame = { status: true, ...action.payload };
       const startThemes = state.themes.map((theme) => {
         if (theme.title === action.payload.title) {
           theme.status[Math.round(action.payload.price / 200 - 1)] = false
         }
         return theme;
       });
-      return { ...state, game: startGame, themes: startThemes };
+      return { ...state, game: initGame, themes: startThemes };
 
     case INIT:
       const initThemes = action.payload.map((el) => {

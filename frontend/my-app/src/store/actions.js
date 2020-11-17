@@ -1,8 +1,9 @@
 import { START_GAME, INIT, ANSWER, SIGNUP, ISAUTH } from "./types";
 
-const startGame = (obj) => ({ type: START_GAME, payload: obj });
+// export default startGame;
 
-export default startGame;
+export const startGame = (obj) => ({ type: START_GAME, payload: obj });
+
 
 export const initStore = (data) => { return { type: INIT, payload: data } };
 
