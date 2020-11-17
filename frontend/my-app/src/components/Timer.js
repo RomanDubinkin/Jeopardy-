@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { handleAnswer } from '../store/actions';
-import { useDispatch } from 'react-redux';
+import { wsContext } from '../screen/Main';
 
 function Timer({ price }) {
-  const dispatch = useDispatch();
   const [count, setCount] = useState(20);
-
+  const ws = React.useContext(wsContext);
   useEffect(() => {
     if (count >= 0) {
       setTimeout(() => setCount(count - 1), 1000)
     } else {
-      dispatch(handleAnswer(-price));
+      ws.send(JSON.stringify({ func: 'handleAnswer', args: -price }));
     }
   }, [count]);
 

@@ -8,8 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Timer from './Timer';
-import { useDispatch } from 'react-redux';
-import { handleAnswer } from '../store/actions';
+import { wsContext } from '../screen/Main';
 
 const useStyles = makeStyles({
   root: {
@@ -32,9 +31,8 @@ const useStyles = makeStyles({
 
 function Game({ title, answer, price, question }) {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const [text, setText] = React.useState('');
-
+  const ws = React.useContext(wsContext);
   const handleChange = (event) => {
     setText(event.target.value);
   }
@@ -43,7 +41,7 @@ function Game({ title, answer, price, question }) {
     const score = (-1 + 2 * (text === answer)) * price;
     console.log('>>>>>>>price', score);
     // setText('');
-    dispatch(handleAnswer(score));
+    ws.send(JSON.stringify({ func: 'handleAnswer', args: score }));
   };
 
   return (
@@ -59,7 +57,7 @@ function Game({ title, answer, price, question }) {
           </Typography>
         </CardContent>
         <CardActions>
-          <div style={{}}><Timer price={price}/></div>
+          <div style={{}}><Timer price={price} /></div>
           <Button onClick={handleClick} size="small">Add!</Button>
 
         </CardActions>

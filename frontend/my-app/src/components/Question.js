@@ -1,6 +1,4 @@
 import React from "react";
-import { startGame } from '../store/actions';
-import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { wsContext } from '../screen/Main';
 
