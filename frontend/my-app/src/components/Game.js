@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import { useDispatch } from 'react-redux';
+import { handleAnswer, initStore } from '../store/actions';
 
 const useStyles = makeStyles({
   root: {
@@ -26,23 +28,36 @@ const useStyles = makeStyles({
   },
 });
 
-function Game({title, answer, price, question}) {
+function Game({ title, answer, price, question }) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  const dispatch = useDispatch();
+  const [text, setText] = React.useState('');
+
+  const handleChange = (event) => {
+    setText(event.target.value);
+  }
+  const handleClick = () => {
+    console.log('check handle click>>>>>!');
+    const score = (-1 + 2 * (text === answer)) * price;
+    console.log('>>>>>>>price', score);
+    // setText('');
+    dispatch(handleAnswer(score));
+  };
+
   return (
     // store is a reserved word!!!!
     <Grid container style={{ textAlign: 'center', marginTop: '4vh', marginLeft: '4vh', alignItems: 'center' }}>
       <Card className={classes.root} variant="outlined">
         <CardContent>
           <Typography variant="h5" component="h2">
-          {question}
-        </Typography>
+            {question}
+          </Typography>
           <Typography variant="body2" component="p">
-            <TextField id="standard-basic" label="Answer" />
+            <TextField onChange={handleChange} id="standard-basic" label="Answer" />
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Add!</Button>
+          <Button onClick={handleClick} size="small">Add!</Button>
         </CardActions>
       </Card>
     </Grid>

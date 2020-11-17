@@ -1,4 +1,4 @@
-import { START_GAME, INIT } from './types'
+import { START_GAME, INIT, ANSWER } from './types'
 
 const initialState = {
   users: [{ user: 'roman', score: 0 }],
@@ -27,6 +27,15 @@ export const reducers = (state = initialState, action) => {
         return { status: new Array(5).fill(true), title: el.title }
       });
       return { ...state, themes: initThemes };
+
+    case ANSWER:
+      console.log('catch aswer >>>>>>');
+      const answerUsers = state.users.map((user, i) => {
+        if (i === 0) user.score += action.payload;
+        return user;
+      });
+      const answerGame = { ...state.game, status: false }
+      return { ...state, users: answerUsers, game: answerGame };
 
     // case DONE_TODO:
     //   const newTodos = state.todos.map((todo) => {
