@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const sessionFileStore = require('session-file-store');
 const path = require('path');
+// const bcrypt = require('bcrypt');
 const dbConnect = require('./db');
 const gameRouter = require('./routes/gameRouter')
+const userRouter = require('./routes/userRouter')
 const createTable = require('./seed')
 
 
@@ -44,7 +46,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use('/', userRouter);
+app.use('/', userRouter);
 app.use('/game', gameRouter);
 
 app.listen(PORT, () => {

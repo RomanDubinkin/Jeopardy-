@@ -7,7 +7,8 @@ function Timer() {
     count >= 0 && setTimeout(() => setCount(count - 1), 1000)
   }, [count]);
 
-  return <h3>{count > 0 ? count : "time's out"}</h3>
+  return <h3>{count > 0 ? count : "Alas! Time's out.."}</h3>
+
 };
 
 export default Timer

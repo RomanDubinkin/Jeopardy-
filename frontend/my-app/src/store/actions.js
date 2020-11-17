@@ -1,19 +1,14 @@
-import { START_GAME, INIT, ANSWER } from "./types";
+import { START_GAME, INIT, ANSWER, SIGNUP, ISAUTH } from "./types";
 
 const startGame = (obj) => ({ type: START_GAME, payload: obj });
 
 export default startGame;
 
-// export const delAllTodosAC = () => ({ type: DEL_ALL_TODOS });
+export const initStore = (data) => { return { type: INIT, payload: data } };
 
-// export const addTodoAC = (todo) => ({ type: ADD_TODO, payload: todo });
+export const handleAnswer = (data) => { return { type: ANSWER, payload: data } };
 
-// export const delTodoAC = (id) => ({ type: DEL_TODO, payload: { id: id } });
+export const signUp = (id, login, email) => { return {type: SIGNUP, payload: {id, login, email}}};
 
-// export const toggleEditAC = (id) => ({ type: TOGGLE_EDIT, payload: { id: id } });
+export const isAuth = (id, login, email) => { return {type: ISAUTH, payload: {id, login, email}}};
 
-// export const toggleEditAndSaveAC = ({ id, value }) => ({ type: TOGGLE_SAVE, payload: { id, value } });
-
-export const initStore = (data) => { console.log("checking on init>>>>>"); return { type: INIT, payload: data } };
-
-export const handleAnswer = (data) => { console.log('>>>handle Answer?'); return { type: ANSWER, payload: data } };

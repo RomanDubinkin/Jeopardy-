@@ -14,12 +14,13 @@ const Main = () => {
         method: 'GET',
       });
       const data = await response.json();
-      console.log('>>>> init data: ', data);
+      
       dispatch(initStore(data));
     };
     getData();
   }, []);
 
+  const user = useSelector((state) => state.isAuth);
   const game = useSelector((store) => store.game);
   const themes = useSelector((store) => store.themes);
   return (
