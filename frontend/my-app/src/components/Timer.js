@@ -10,6 +10,7 @@ function Timer({ price }) {
     count >= 0 && setTimeout(() => setCount(count - 1), 1000)
   }, [count]);
 
+
   return <h3>{count > 0 ? count : dispatch(handleAnswer(-price))}</h3>
 };
 
