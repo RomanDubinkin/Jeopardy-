@@ -6,7 +6,6 @@ const Card = require('../models/cardModel');
 router.get('', async (req, res) => {
   try {
     const themes = await Card.find({}, 'title').lean();
-    console.log(themes);
     res.json(themes);
   } catch (error) {
     res.send(500).end();

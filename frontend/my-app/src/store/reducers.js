@@ -1,13 +1,12 @@
 import { START_GAME, INIT, ANSWER } from './types'
-import { startGame, initStore, handleAnswer } from './actions'
+
 
 const initialState = {
   users: [{ user: 'roman', score: 0 }],
   themes: [{ title: 'money', status: [true, true, true, true, true] }],
   game: { status: false, question: '2+2=?', asnwer: '4', title: 'money', price: 400 },
   loading: false,
-  isAuth: false,
-  func: { startGame, initStore, handleAnswer }
+  isAuth: false
 };
 
 export const reducers = (state = initialState, action) => {

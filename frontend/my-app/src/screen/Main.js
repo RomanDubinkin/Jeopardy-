@@ -3,14 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import Table from '../components/Table';
 import Game from '../components/Game';
 import Container from '@material-ui/core/Container';
-import { initStore } from "../store/actions";
+import { startGame, initStore, handleAnswer } from "../store/actions";
+
+const func = { startGame, initStore, handleAnswer };
 
 const ws = new WebSocket('ws://localhost:3100');
 const wsContext = React.createContext();
-ws.onmessage = (e) => {
-  const data = JSON.parse(e.data);
-  console.log(">>>>>>> getting something from WS server", data);
-}
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -25,6 +23,11 @@ const Main = () => {
     };
     getData();
   }, []);
+
+  ws.onmessage = (e) => {
+  const data = JSON.parse(e.data);
+  dispatch(func[data.func](data.args));
+}
 
   const game = useSelector((store) => store.game);
   const themes = useSelector((store) => store.themes);
