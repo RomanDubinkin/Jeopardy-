@@ -1,9 +1,11 @@
 import React from "react";
 import Button from '@material-ui/core/Button';
 import { wsContext } from '../screen/Main';
+import { useSelector } from 'react-redux';
 
 function Question({ price, state, title }) {
   const ws = React.useContext(wsContext)
+  const isAuth = useSelector((store) => store.isAuth);
   const handleClick = async () => {
     if (state) {
       const response = await fetch(`http://localhost:3100/game/${title}`, {
@@ -19,7 +21,7 @@ function Question({ price, state, title }) {
   return (
     // store is a reserved word!!!!
 
-    <Button onClick={handleClick} >{state && price}</Button>
+    <Button onClick={handleClick} disabled={!isAuth} >{state && price}</Button>
 
   );
 }

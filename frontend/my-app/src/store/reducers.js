@@ -6,6 +6,7 @@ const initialState = {
   themes: [{ title: 'money', status: [true, true, true, true, true] }],
   game: { status: false, question: '2+2=?', asnwer: '4', title: 'money', price: 400 },
   loading: false,
+  abled: true,
   default: 'roman',
   isAuth: false
 };
@@ -56,7 +57,7 @@ export const reducers = (state = initialState, action) => {
       // if (timeOut && action.payload.login) answerUsers = [...answerUsers, action.payload];
       // updating status of the game: if true, other user should have a chance to answer the question
       const answerGame = { ...state.game, status: (action.payload.score < 0) }
-      return { ...state, users: answerUsers, game: answerGame, isAuth: (timeOut && state.default === state.login) || (!timeOut && correctAnswer && state.login === current), default: current };
+      return { ...state, abled: (!(state.login === action.payload.login) && state.abled) || (action.payload.score > 0), users: answerUsers, game: answerGame, isAuth: (timeOut && state.default === state.login) || (!timeOut && correctAnswer && state.login === current), default: current };
 
     case SIGNUP:
       console.log('checking signUp reducers', state);
