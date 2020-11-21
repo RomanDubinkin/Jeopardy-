@@ -5,7 +5,7 @@ import { START_GAME, INIT, ANSWER, SIGNUP, ISAUTH, USERS } from "./types";
 export const startGame = (obj) => ({ type: START_GAME, payload: obj });
 
 
-export const initStore = (data) => { return { type: INIT, payload: data } };
+export const initStore = (data) => { console.log('trying init>>>>>'); return { type: INIT, payload: data } };
 
 export const handleAnswer = (data) => { return { type: ANSWER, payload: data } };
 

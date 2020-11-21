@@ -12,11 +12,12 @@ const wsContext = React.createContext();
 
 const Main = () => {
   const dispatch = useDispatch();
-  const users = useSelector((store)=>store.users);
-  // tried to reset users table on init, without success -()
-  // ws.onopen = ()=>{
-  //   setTimeout(()=>{ws.send(JSON.stringify({ func: 'setUsers', args: users }))}, 1000);
-  // };
+  const login = useSelector((store)=>store.login);
+  // const [virgin, setVirgin] = React.useState(true);
+  // if (virgin) {
+  //  ws.send(JSON.stringify({ func: 'setUsers', args: login }));
+  //  setVirgin(false)};
+
   React.useEffect(() => {
     async function getData() {
       const response = await fetch('http://localhost:3100/game', {
@@ -25,6 +26,7 @@ const Main = () => {
       const data = await response.json();
       
       dispatch(initStore(data));
+      // setVirgin(true);
     };
     getData();
   }, []);
