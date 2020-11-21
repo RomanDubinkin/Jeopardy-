@@ -1,4 +1,4 @@
-import { START_GAME, INIT, ANSWER, SIGNUP, ISAUTH } from './types'
+import { START_GAME, INIT, ANSWER, SIGNUP, ISAUTH, USERS } from './types'
 
 
 const initialState = {
@@ -30,13 +30,24 @@ export const reducers = (state = initialState, action) => {
       });
       return { ...state, themes: initThemes };
 
+      // resetting array of current users upon new user entering the game through websockets
+    case USERS:
+          console.log('trying to reset users array')
+          const resetUsers = [...action.payload];
+        return { ...state, users: resetUsers};  
+
     case ANSWER:
       console.log('catch aswer >>>>>>');
       // find the user that gave the answer and update his/her total score balance
-      const answerUsers = state.users.map((user) => {
-        if (user.login === action.payload.login) user.score += action.payload.score;
+      let flag = false;
+      let answerUsers = state.users.map((user) => {
+        if (user.login === action.payload.login) {
+          user.score += action.payload.score;
+          flag = true;
+        }
         return user;
       });
+      if (!flag && action.payload.login) answerUsers = [...answerUsers, action.payload];
       // updating status of the game: if true, other user should have a chance to answer the question
       const answerGame = { ...state.game, status: (action.payload.score < 0) }
       return { ...state, users: answerUsers, game: answerGame };
