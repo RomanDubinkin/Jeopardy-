@@ -1,11 +1,12 @@
-import { START_GAME, INIT, ANSWER, SIGNUP, ISAUTH } from './types'
+import { START_GAME, INIT, ANSWER, SIGNUP, ISAUTH, USERS } from './types'
 
 
 const initialState = {
-  users: [{ user: 'roman', score: 0 }],
+  users: [{ login: 'roman', score: 0 }, { login: 'lucky_loser', score: 0 }],
   themes: [{ title: 'money', status: [true, true, true, true, true] }],
   game: { status: false, question: '2+2=?', asnwer: '4', title: 'money', price: 400 },
   loading: false,
+  default: 'roman',
   isAuth: false
 };
 
@@ -25,61 +26,49 @@ export const reducers = (state = initialState, action) => {
       return { ...state, game: initGame, themes: startThemes };
 
     case INIT:
+      console.log('>>>>>catching init>>>>', state);
       const initThemes = action.payload.map((el) => {
         return { status: new Array(5).fill(true), title: el.title }
       });
       return { ...state, themes: initThemes };
 
+      // resetting array of current users upon new user entering the game through websockets
+    case USERS:
+          console.log('trying to reset users array', state);
+          const resetUsers = [...state.users, {login: action.payload, score: 0}];
+        return { ...state, users: resetUsers};  
+
     case ANSWER:
       console.log('catch aswer >>>>>>');
-      const answerUsers = state.users.map((user, i) => {
-        if (i === 0) user.score += action.payload;
+      // find the user that gave the answer and update his/her total score balance
+      let timeOut = true;
+      const correctAnswer = (action.payload.score > 0)
+      let current = state.default;
+      let answerUsers = state.users.map((user) => {
+        if (user.login === action.payload.login) {
+          user.score += action.payload.score;
+          timeOut = false;
+          if (correctAnswer) current = action.payload.login;
+        }
         return user;
       });
-      const answerGame = { ...state.game, status: false }
-      return { ...state, users: answerUsers, game: answerGame };
+      // adding new users through action: answering question, not necessary in hard-coded vesrion
+      // if (timeOut && action.payload.login) answerUsers = [...answerUsers, action.payload];
+      // updating status of the game: if true, other user should have a chance to answer the question
+      const answerGame = { ...state.game, status: (action.payload.score < 0) }
+      return { ...state, users: answerUsers, game: answerGame, isAuth: (timeOut && state.default === state.login) || (!timeOut && correctAnswer && state.login === current), default: current };
 
     case SIGNUP:
-      return {...state, id: action.payload.id, login: action.payload.login, email: action.payload.email};
+      console.log('checking signUp reducers', state);
+        // adding newly signup user to the list of current users
+        const signupUsers = [...state.users] // {login: action.payload.login, score: 0 }];
 
+        // adding new fields such as id, login, email and return updated state
+      return {...state, users: signupUsers, isAuth: (state.default === action.payload.login), id: action.payload.id, login: action.payload.login, email: action.payload.email};
+
+      // most likely not going to need this one
     case ISAUTH:
       return {...state, id: action.payload.id, login: action.payload.login, email: action.payload.email};
-
-
-    // case DONE_TODO:
-    //   const newTodos = state.todos.map((todo) => {
-    //     if (todo.id === action.payload.id) todo.done = true;
-    //     return todo;
-    //   });
-    //   return { ...state, todos: newTodos };
-
-    // case DEL_ALL_TODOS:
-    //   return { ...state, todos: [] };
-
-    // case ADD_TODO:
-    //   const expandedTodos = [...state.todos, action.payload];
-    //   return { ...state, todos: expandedTodos };
-
-    // case DEL_TODO:
-    //   const filteredTodos = state.todos.filter((todo) => todo.id !== action.payload.id);
-    //   return { ...state, todos: filteredTodos };
-
-    // case TOGGLE_EDIT:
-    //   const editTodos = state.todos.map((todo) => {
-    //     if (todo.id === action.payload.id) todo.edit = !todo.edit;
-    //     return todo;
-    //   });
-    //   return { ...state, todos: editTodos };
-
-    // case TOGGLE_SAVE:
-    //   const saveTodos = state.todos.map((todo) => {
-    //     if (todo.id === action.payload.id) {
-    //       todo.edit = !todo.edit;
-    //       todo.value = action.payload.value;
-    //     }
-    //     return todo;
-    //   });
-    //   return { ...state, todos: saveTodos };
 
     default:
       return state;

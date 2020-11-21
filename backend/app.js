@@ -56,6 +56,7 @@ const wsServer = new ws.Server({ server: httpsServer });
 wsServer.on('connection', (client) => {
   clients.push(client);
   client.on('message', (data) => {
+    console.log(data);
     clients.forEach((c) => c.send(data));
   });
 });

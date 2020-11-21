@@ -3,15 +3,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import Table from '../components/Table';
 import Game from '../components/Game';
 import Container from '@material-ui/core/Container';
-import { startGame, initStore, handleAnswer } from "../store/actions";
+import { startGame, initStore, handleAnswer, setUsers } from "../store/actions";
 
-const func = { startGame, initStore, handleAnswer };
+const func = { startGame, initStore, handleAnswer, setUsers };
 
 const ws = new WebSocket('ws://localhost:3100');
 const wsContext = React.createContext();
 
 const Main = () => {
   const dispatch = useDispatch();
+  const login = useSelector((store)=>store.login);
+  // const [virgin, setVirgin] = React.useState(true);
+  // if (virgin) {
+  //  ws.send(JSON.stringify({ func: 'setUsers', args: login }));
+  //  setVirgin(false)};
+
   React.useEffect(() => {
     async function getData() {
       const response = await fetch('http://localhost:3100/game', {
@@ -20,9 +26,11 @@ const Main = () => {
       const data = await response.json();
       
       dispatch(initStore(data));
+      // setVirgin(true);
     };
     getData();
   }, []);
+
   ws.onmessage = (e) => {
   const data = JSON.parse(e.data);
   dispatch(func[data.func](data.args));
