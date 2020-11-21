@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import { signUp } from '../store/actions';
 import { Link } from 'react-router-dom';
+import {wsContext} from '../App';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login() {
-
+  const ws = React.useContext(wsContext);
   const classes = useStyles();
 
   const history = useHistory();
@@ -45,6 +46,7 @@ function Login() {
       const email = newResponse.email;
 
       dispatch(signUp(id, login, email));
+      ws.send(JSON.stringify({ func: 'setUsers', args: login }));
 
       // history.push('/');
   }

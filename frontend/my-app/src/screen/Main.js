@@ -4,17 +4,16 @@ import Table from '../components/Table';
 import Game from '../components/Game';
 import Container from '@material-ui/core/Container';
 import { startGame, initStore, handleAnswer, setUsers } from "../store/actions";
+import {wsContext} from '../App';
 
 const func = { startGame, initStore, handleAnswer, setUsers };
 
-const ws = new WebSocket('ws://localhost:3100');
-const wsContext = React.createContext();
-
 const Main = () => {
   const dispatch = useDispatch();
-  const login = useSelector((store)=>store.login);
+  const ws = React.useContext(wsContext);
+  // const login = useSelector((store)=>store.login);
   // const [virgin, setVirgin] = React.useState(true);
-  // if (virgin) {
+  // if (login && virgin) {
   //  ws.send(JSON.stringify({ func: 'setUsers', args: login }));
   //  setVirgin(false)};
 
@@ -26,7 +25,6 @@ const Main = () => {
       const data = await response.json();
       
       dispatch(initStore(data));
-      // setVirgin(true);
     };
     getData();
   }, []);
@@ -39,16 +37,13 @@ const Main = () => {
   const game = useSelector((store) => store.game);
   const themes = useSelector((store) => store.themes);
   return (
-    <wsContext.Provider value={ws}>
       <React.Fragment>
         <Container maxWidth="sm" style={{ backgroundColor: 'pink', height: '40vh', marginTop: '10vh' }}>
           {!game.status && <Table themes={themes} />}
           {game.status && <Game title={game.title} question={game.question} price={game.price} answer={game.answer} />}
         </Container>
       </React.Fragment >
-    </wsContext.Provider>
   )
 };
 
 export default Main;
-export { wsContext };
