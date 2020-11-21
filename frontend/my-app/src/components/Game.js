@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Timer from './Timer';
 import { wsContext } from '../screen/Main';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
@@ -31,6 +32,7 @@ const useStyles = makeStyles({
 
 function Game({ title, answer, price, question }) {
   const classes = useStyles();
+  const login = useSelector((store)=>store.login);
   const [text, setText] = React.useState('');
   const ws = React.useContext(wsContext);
   const handleChange = (event) => {
@@ -38,7 +40,7 @@ function Game({ title, answer, price, question }) {
   }
   const handleClick = () => {
     const score = (-1 + 2 * (text === answer)) * price;
-    ws.send(JSON.stringify({ func: 'handleAnswer', args: score }));
+    ws.send(JSON.stringify({ func: 'handleAnswer', args: {score,login} }));
   };
 
   return (

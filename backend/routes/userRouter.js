@@ -39,12 +39,13 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
 
   const {email, password} = req.body;
+  console.log("trying to login :>>>>>>>req.body", req.body);
 
   try {
     const findUser = await User.findOne({email});
-    if (findUser && await findUser.password) {
+    if ((findUser) && findUser.password === password) {
       req.session.user = findUser;
-
+      console.log('login status: success>>>>')
       return res.json({
         id: findUser._id,
         login: findUser.name,
