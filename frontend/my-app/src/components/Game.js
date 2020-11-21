@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Timer from './Timer';
-import { wsContext } from '../screen/Main';
+import { wsContext } from '../App';
 import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({

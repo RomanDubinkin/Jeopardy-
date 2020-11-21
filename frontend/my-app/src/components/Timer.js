@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { wsContext } from '../screen/Main';
+import { wsContext } from '../App';
 
 function Timer({ price }) {
   const [count, setCount] = useState(20);

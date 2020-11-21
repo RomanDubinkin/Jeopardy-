@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 function Index() {
   const classes = useStyles();
   const user = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
 
   return (
     <>
