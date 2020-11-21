@@ -35,7 +35,7 @@ export const reducers = (state = initialState, action) => {
       // resetting array of current users upon new user entering the game through websockets
     case USERS:
           console.log('trying to reset users array', state);
-          const resetUsers = [...state.users, {login: action.payload, score: 0}];
+          const resetUsers = [...state.users, ...action.payload];
         return { ...state, users: resetUsers};  
 
     case ANSWER:
