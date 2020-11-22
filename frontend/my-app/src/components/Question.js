@@ -19,7 +19,7 @@ function Question({ price, state, title }) {
   return (
     // store is a reserved word!!!!
 
-    <Button onClick={handleClick} >{state && price}</Button>
+    <Button onClick={handleClick} disabled={!isAuth} >{state && price}</Button>
 
   );
 }

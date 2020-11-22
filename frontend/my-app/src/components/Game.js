@@ -33,12 +33,14 @@ const useStyles = makeStyles({
 function Game({ title, answer, price, question }) {
   const classes = useStyles();
   const login = useSelector((store)=>store.login);
+  const abled = useSelector((store) => store.abled);
   const [text, setText] = React.useState('');
   const ws = React.useContext(wsContext);
   const handleChange = (event) => {
     setText(event.target.value);
   }
   const handleClick = () => {
+    setText('');
     const score = (-1 + 2 * (text === answer)) * price;
     ws.send(JSON.stringify({ func: 'handleAnswer', args: {score,login} }));
   };
@@ -52,12 +54,12 @@ function Game({ title, answer, price, question }) {
             {question}
           </Typography>
           <Typography variant="body2" component="p">
-            <TextField onChange={handleChange} id="standard-basic" label="Answer" />
+            <TextField onChange={handleChange} disabled={!abled} id="standard-basic" value={text} label="Answer" />
           </Typography>
         </CardContent>
         <CardActions>
           <div style={{}}><Timer price={price} /></div>
-          <Button onClick={handleClick} size="small">Add!</Button>
+          <Button onClick={handleClick} disabled={!abled} size="small">Add!</Button>
         </CardActions>
       </Card>
     </Grid>
