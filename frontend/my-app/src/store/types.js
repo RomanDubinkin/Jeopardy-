@@ -4,4 +4,4 @@ export const ANSWER = "ANSWER";
 export const SIGNUP = "SIGNUP";
 export const ISAUTH = "ISAUTH";
 export const USERS = "USERS";
-
+export const THUNK_INIT = "THUNK_INIT";
