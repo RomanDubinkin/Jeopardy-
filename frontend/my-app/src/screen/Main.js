@@ -14,23 +14,18 @@ const func = { startGame, initStore, handleAnswer, setUsers };
 const Main = () => {
   const dispatch = useDispatch();
   const ws = React.useContext(wsContext);
-  // const login = useSelector((store)=>store.login);
-  // const [virgin, setVirgin] = React.useState(true);
-  // if (login && virgin) {
-  //  ws.send(JSON.stringify({ func: 'setUsers', args: login }));
-  //  setVirgin(false)};
 
-  React.useEffect(() => {
-    async function getData() {
-      const response = await fetch('http://localhost:3100/game', {
-        method: 'GET',
-      });
-      const data = await response.json();
+  // React.useEffect(() => {
+  //   async function getData() {
+  //     const response = await fetch('http://localhost:3100/game', {
+  //       method: 'GET',
+  //     });
+  //     const data = await response.json();
       
-      dispatch(initStore(data));
-    };
-    getData();
-  }, []);
+  //     dispatch(initStore(data));
+  //   };
+  //   getData();
+  // }, []);
 
   ws.onmessage = (e) => {
   const data = JSON.parse(e.data);

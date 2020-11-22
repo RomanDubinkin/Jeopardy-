@@ -31,7 +31,9 @@ export const reducers = (state = initialState, action) => {
       const initThemes = action.payload.map((el) => {
         return { status: new Array(5).fill(true), title: el.title }
       });
-      return { ...state, themes: initThemes };
+      let initDefault = state.login;
+      if (state.users.length !== 0) initDefault = state.users[0].login;
+      return { ...state, themes: initThemes, default: initDefault, isAuth: (initDefault === state.login) };
 
       // resetting array of current users upon new user entering the game through websockets
     case USERS:
@@ -62,7 +64,7 @@ export const reducers = (state = initialState, action) => {
     case SIGNUP:
       console.log('checking signUp reducers', state);
         // adding new fields such as id, login, email and return updated state
-      return {...state, isAuth: (state.default === action.payload.login), id: action.payload.id, login: action.payload.login, email: action.payload.email};
+      return {...state, id: action.payload.id, login: action.payload.login, email: action.payload.email};
 
       // most likely not going to need this one
     case ISAUTH:
