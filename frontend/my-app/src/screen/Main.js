@@ -7,17 +7,16 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { startGame, initStore, handleAnswer, setUsers } from "../store/actions";
+import {wsContext} from '../App';
 
 const func = { startGame, initStore, handleAnswer, setUsers };
 
-const ws = new WebSocket('ws://localhost:3100');
-const wsContext = React.createContext();
-
 const Main = () => {
   const dispatch = useDispatch();
-  const login = useSelector((store)=>store.login);
+  const ws = React.useContext(wsContext);
+  // const login = useSelector((store)=>store.login);
   // const [virgin, setVirgin] = React.useState(true);
-  // if (virgin) {
+  // if (login && virgin) {
   //  ws.send(JSON.stringify({ func: 'setUsers', args: login }));
   //  setVirgin(false)};
 
@@ -29,7 +28,6 @@ const Main = () => {
       const data = await response.json();
       
       dispatch(initStore(data));
-      // setVirgin(true);
     };
     getData();
   }, []);
@@ -74,8 +72,7 @@ function FormRow() {
   const game = useSelector((store) => store.game);
   const themes = useSelector((store) => store.themes);
   
-  return (
-    <wsContext.Provider value={ws}>
+  return ( 
       <React.Fragment>      
         <div className={classes.root}>
           <Grid container spacing={1}>
@@ -84,14 +81,13 @@ function FormRow() {
             </Grid>
           </Grid>
          </div>
+
         <Container maxWidth="sm" style={{ backgroundColor: 'pink', height: '40vh', marginTop: '10vh' }}>
           {!game.status && <Table themes={themes} />}
           {game.status && <Game title={game.title} question={game.question} price={game.price} answer={game.answer} />}
         </Container>
       </React.Fragment >
-    </wsContext.Provider>
   )
 };
 
 export default Main;
-export { wsContext };

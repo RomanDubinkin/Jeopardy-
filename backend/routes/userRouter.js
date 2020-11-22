@@ -4,6 +4,8 @@ require('dotenv').config();
 
 const router = express.Router();
 const User = require('../models/userModel');
+const Game = require('../models/gameModel');
+
 
 router.post('/register', async (req, res) => {
   const {
@@ -45,13 +47,28 @@ router.post('/login', async (req, res) => {
     const findUser = await User.findOne({email});
     if ((findUser) && findUser.password === password) {
       req.session.user = findUser;
-      console.log('login status: success>>>>')
-      return res.json({
-        id: findUser._id,
-        login: findUser.name,
-        email: findUser.email,
-        status: 'ok',
-      })
+      const data = await Game.findOne({},{users: true, _id: false}).populate({
+       path: 'users.login', 
+       select: 'name -_id',
+       }).lean();
+      if (data !== null) {
+        await Game.updateOne({},{ $addToSet: { users: {login: findUser._id}}});
+        return res.json({
+          id: findUser._id,
+          login: findUser.name,
+          email: findUser.email,
+          data: data.users.map((el)=>{return {login: el.login.name, score: el.score}}),
+          status: 'ok',
+      });
+      } else {
+        await Game.create({users: [{login: findUser._id}]});
+        return res.json({
+          id: findUser._id,
+          login: findUser.name,
+          email: findUser.email,
+          status: 'ok',
+        });
+      }
     }
   } catch (error) {
     return res.json(error);

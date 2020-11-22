@@ -4,8 +4,9 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import { signUp } from '../store/actions';
+import { signUp, setUsers} from '../store/actions';
 import { Link } from 'react-router-dom';
+import {wsContext} from '../App';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login() {
-
+  const ws = React.useContext(wsContext);
   const classes = useStyles();
 
   const history = useHistory();
@@ -43,8 +44,9 @@ function Login() {
       const id = newResponse.id;
       const login = newResponse.login;
       const email = newResponse.email;
-
+      if (newResponse.data) dispatch(setUsers(newResponse.data));
       dispatch(signUp(id, login, email));
+      ws.send(JSON.stringify({ func: 'setUsers', args: [{login, score: 0}] }));
 
       // history.push('/');
   }
