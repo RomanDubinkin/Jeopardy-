@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import {signUp} from '../store/actions'
+import {thunkInit} from '../store/actions';
+import {wsContext} from '../App';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,8 +19,7 @@ const useStyles = makeStyles((theme) => ({
 function Register() {
 
   const classes = useStyles();
-
-  const history = useHistory();
+  const ws = React.useContext(wsContext);
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
@@ -42,13 +42,7 @@ function Register() {
     const response = await request.json();
     if (response.status === 'ok') {
       console.log('юхууууууу');
-      const id = response.id;
-      const login = response.login;
-      const email = response.email;
-
-      dispatch(signUp(id, login, email));
-
-      // history.push('/');
+      dispatch(thunkInit({email,password,ws}));
     }
   }
   

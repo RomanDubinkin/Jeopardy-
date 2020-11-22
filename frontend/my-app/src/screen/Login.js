@@ -26,7 +26,7 @@ function Login() {
   const [password, setPassword] = useState('');
 
   async function handleClick() {
-    dispatch(thunkInit({email,password,ws}))
+    dispatch(thunkInit({email,password,ws}));
   }
 
 
