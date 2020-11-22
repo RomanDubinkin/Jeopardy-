@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import { signUp, setUsers} from '../store/actions';
+import { signUp, setUsers, initStore} from '../store/actions';
 import { Link } from 'react-router-dom';
 import {wsContext} from '../App';
 
@@ -40,12 +40,17 @@ function Login() {
     })
     const newResponse = await response.json();
     if (newResponse.status === 'ok') {
+      const response = await fetch('http://localhost:3100/game', {
+        method: 'GET',
+      });
+      const data = await response.json();
       console.log('юхууууууу');
       const id = newResponse.id;
       const login = newResponse.login;
       const email = newResponse.email;
       if (newResponse.data) dispatch(setUsers(newResponse.data));
       dispatch(signUp(id, login, email));
+      dispatch(initStore(data));
       ws.send(JSON.stringify({ func: 'setUsers', args: [{login, score: 0}] }));
 
       // history.push('/');
