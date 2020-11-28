@@ -35,7 +35,7 @@ function Login() {
       <Input onChange={(event) => setEmail(event.target.value)} name="userEmail" type="text"placeholder="Email" inputProps={{ 'aria-label': 'description' }} />
       <Input onChange={(event) => setPassword(event.target.value)} name="userPassword" type="password" placeholder="Password" inputProps={{ 'aria-label': 'description' }} />
       {/* <Input defaultValue="Error" error inputProps={{ 'aria-label': 'description' }} /> */}
-      <Button onClick={handleClick} type="button" variant="outlined" color="secondary"><Link className="linkClass" to={'/game'}>LOG IN</Link></Button>
+      <Button onClick={handleClick} type="button" variant="outlined" color="secondary">LOG IN</Button>
     </form>
   );
 }

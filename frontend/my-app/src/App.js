@@ -17,7 +17,7 @@ function App() {
     <Provider store={state}>
     <wsContext.Provider value={ws}>
       <Router>
-        <Route exact path='/home'>
+        <Route exact path='/'>
           <Index />
         </Route>
         <Switch>

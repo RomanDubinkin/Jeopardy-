@@ -18,21 +18,29 @@ export const isAuth = (id, login, email) => { return {type: ISAUTH, payload: {id
 export const thunkInit = ({email, password, ws}) => async(dispatch) => {
     const response = await fetch('http://localhost:3100/login', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://localhost:3000',
+          'Access-Control-Allow-Credentials': true,
         },
         body: JSON.stringify({
           email, 
           password,
         }),
       })
+      console.log('fetch post response>>>>>', response);
       const newResponse = await response.json();
       if (newResponse.status === 'ok') {
         const response = await fetch('http://localhost:3100/game', {
           method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Access-Control-Allow-Origin': 'http://localhost:3000',
+          }
         });
         const data = await response.json();
-        console.log('юхууууууу');
+        console.log('юхууууууу data from the server', data);
         const id = newResponse.id;
         const login = newResponse.login;
         const email = newResponse.email;

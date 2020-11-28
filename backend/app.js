@@ -19,15 +19,24 @@ const PORT = process.env.PORT || 3100;
 
 dbConnect();
 // createTable();
+app.set('session cookie name', 'sid');
+// app.options('*', cors({origin: 'http://localhost:3000/game:1'}));
+app.options('*', (req, res) => {
+  res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.set('Access-Control-Allow-Credentials', true);
+  res.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Credentials");
+  res.send('ok');
+});
 
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+
+app.use(cors({origin: 'http://localhost:3000', credentials: true}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const FileStore = sessionFileStore(session);
 app.use(
   session({
-    name: app.get('session cookie name'),
+    // name: app.get('session cookie name'),
     secret: process.env.SESSION_SECRET,
     store: new FileStore({
       secret: process.env.SESSION_SECRET,
@@ -35,7 +44,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24,
+      path: '/',
+      maxAge: 1000*60*2,
+      sameSite: false,
     },
   })
 );
