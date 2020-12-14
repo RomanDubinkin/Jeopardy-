@@ -12,6 +12,9 @@ import {wsContext} from '../App';
 const func = { startGame, initStore, handleAnswer, setUsers };
 
 const Main = () => {
+  const game = useSelector((store) => store.game);
+  const themes = useSelector((store) => store.themes);
+  const login = useSelector((store) => store.login)
   const dispatch = useDispatch();
   const ws = React.useContext(wsContext);
 
@@ -63,10 +66,7 @@ function FormRow() {
     </React.Fragment>
   );
 }
-
-  const game = useSelector((store) => store.game);
-  const themes = useSelector((store) => store.themes);
-  
+    
   return ( 
       <React.Fragment>      
         <div className={classes.root}>
