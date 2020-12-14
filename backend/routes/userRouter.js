@@ -47,6 +47,7 @@ router.post('/login', async (req, res) => {
     const findUser = await User.findOne({email});
     if ((findUser) && findUser.password === password) {
       req.session.user = findUser;
+      console.log('checking find user', req.session);
       const data = await Game.findOne({},{users: true, _id: false}).populate({
        path: 'users.login', 
        select: 'name -_id',
