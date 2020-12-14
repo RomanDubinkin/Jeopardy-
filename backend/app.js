@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3100;
 dbConnect();
 // createTable();
 app.set('session cookie name', 'sid');
-// app.options('*', cors({origin: 'http://localhost:3000/game:1'}));
+app.set('trust proxy', 1);
 app.options('*', (req, res) => {
   res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.set('Access-Control-Allow-Credentials', true);
@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 const FileStore = sessionFileStore(session);
 app.use(
   session({
-    // name: app.get('session cookie name'),
+    name: app.get('session cookie name'),
     secret: process.env.SESSION_SECRET,
     store: new FileStore({
       secret: process.env.SESSION_SECRET,
@@ -46,7 +46,9 @@ app.use(
     cookie: {
       path: '/',
       maxAge: 1000*60*2,
-      sameSite: false,
+      sameSite: 'none',
+      secure: true,
+      httpOnly: false,
     },
   })
 );
