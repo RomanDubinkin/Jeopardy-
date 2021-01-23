@@ -59,7 +59,7 @@ function Game({ title, answer, price, question }) {
         </CardContent>
         <CardActions>
           <div style={{}}><Timer price={price} /></div>
-          <Button onClick={handleClick} disabled={!abled} size="small">Add!</Button>
+          <Button onClick={handleClick} disabled={!abled} size="small">Submit</Button>
         </CardActions>
       </Card>
     </Grid>

@@ -28,7 +28,7 @@ function Login() {
   const [password, setPassword] = useState('');
 
   async function handleClick() {
-    dispatch(thunkInit({email,password,ws}));
+    await dispatch(thunkInit({email,password,ws}));
     history.push('/game');
   }
 
