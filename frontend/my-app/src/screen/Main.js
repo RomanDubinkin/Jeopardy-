@@ -14,7 +14,7 @@ const func = { startGame, initStore, handleAnswer, setUsers };
 const Main = () => {
   const game = useSelector((store) => store.game);
   const themes = useSelector((store) => store.themes);
-  const login = useSelector((store) => store.login)
+  const users = useSelector((store) => store.users)
   const dispatch = useDispatch();
   const ws = React.useContext(wsContext);
 
@@ -48,21 +48,21 @@ const useStyles = makeStyles((theme) => ({
 
 const classes = useStyles();
 
-function FormRow() {
+function Score ({user}) {
+  return (
+    <Grid item xs={6} style={{ backgroundColor: 'pink', padding: '5vh' }}>
+      <Paper className={classes.paper}>
+        <p>{user.login}</p>
+        <p>score: {user.score} </p>
+        </Paper>
+    </Grid>
+  )
+}
+
+function FormRow({users}) {
   return (
     <React.Fragment>
-      <Grid item xs={6} style={{ backgroundColor: 'pink', padding: '5vh' }}>
-        <Paper className={classes.paper}>
-          <p>{login}</p>
-          <p>score: </p>
-        </Paper>
-      </Grid>
-      <Grid item xs={6} style={{ backgroundColor: 'pink', padding: '5vh' }}>
-        <Paper className={classes.paper}>
-        <p>USER 2</p>
-        <p>score: </p>
-        </Paper>
-      </Grid>
+      {users.map(user=><Score key={user.login} user={user}/>)}
     </React.Fragment>
   );
 }
@@ -72,7 +72,7 @@ function FormRow() {
         <div className={classes.root}>
           <Grid container spacing={1}>
             <Grid container item xs={12}>
-              <FormRow />
+              <FormRow users={users}/>
             </Grid>
           </Grid>
          </div>

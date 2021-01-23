@@ -12,7 +12,7 @@ const Theme = ({ theme }) => {
       <Grid item xs={8}>
         <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group">
           {theme.status.map((el, i) => (
-            <Question title={theme.title} price={200 * (1 + i)} state={el} />
+            <Question key={i} title={theme.title} price={200 * (1 + i)} state={el} />
           ))}
         </ButtonGroup>
       </Grid>

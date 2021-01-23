@@ -8,7 +8,7 @@ function Timer({ price }) {
     if (count >= 0) {
       setTimeout(() => setCount(count - 1), 1000)
     } else {
-      ws.send(JSON.stringify({ func: 'handleAnswer', args: -price }));
+      ws.send(JSON.stringify({ func: 'handleAnswer', args: {score: -price, login: null }}));
     }
   }, [count]);
   return <h3>{count > 0 ? count : "time out"}</h3>

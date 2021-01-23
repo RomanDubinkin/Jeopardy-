@@ -9,7 +9,7 @@ const Table = ({ themes }) => {
   return (
     <Grid container spacing={3}>
       {themes.map((theme) => (
-        <Theme theme={theme} />
+        <Theme key={theme.title} theme={theme} />
       ))}
     </Grid>
   );

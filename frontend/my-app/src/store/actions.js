@@ -39,11 +39,13 @@ export const thunkInit = ({email, password, ws}) => async(dispatch) => {
             'Access-Control-Allow-Origin': 'http://localhost:3000',
           }
         });
+        // data is the titles of the themes which we get after successful login
         const data = await response.json();
         console.log('юхууууууу data from the server', data);
         const id = newResponse.id;
         const login = newResponse.login;
         const email = newResponse.email;
+        // get newly logined user up-to-date in terms of who is already in
         if (newResponse.data) dispatch(setUsers(newResponse.data));
         dispatch(signUp(id, login, email));
         dispatch(initStore(data));
