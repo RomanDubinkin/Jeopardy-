@@ -59,7 +59,7 @@ export const reducers = (state = initialState, action) => {
       // if (timeOut && action.payload.login) answerUsers = [...answerUsers, action.payload];
       // updating status of the game: if true, other user should have a chance to answer the question
       const answerGame = { ...state.game, status: !(correctAnswer||timeOut)};
-      return { ...state, abled: (!(state.login === action.payload.login) && state.abled) || (action.payload.score > 0), users: answerUsers, game: answerGame, isAuth: (timeOut && state.default === state.login) || (!timeOut && correctAnswer && state.login === current), default: current };
+      return { ...state, abled: (!(state.login === action.payload.login) && state.abled) || (action.payload.score > 0)||timeOut, users: answerUsers, game: answerGame, isAuth: (timeOut && state.default === state.login) || (!timeOut && correctAnswer && state.login === current), default: current };
 
     case SIGNUP:
       console.log('checking signUp reducers', state);
