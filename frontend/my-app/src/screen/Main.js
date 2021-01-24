@@ -48,9 +48,9 @@ const useStyles = makeStyles((theme) => ({
 
 const classes = useStyles();
 
-function Score ({user}) {
+function Score ({user,size}) {
   return (
-    <Grid item xs={6} style={{ backgroundColor: 'pink', padding: '5vh' }}>
+    <Grid item xs={size} style={{ backgroundColor: 'pink', padding: '5vh' }}>
       <Paper className={classes.paper}>
         <p>{user.login}</p>
         <p>score: {user.score} </p>
@@ -60,9 +60,10 @@ function Score ({user}) {
 }
 
 function FormRow({users}) {
+  const size = 12/users.length;
   return (
     <React.Fragment>
-      {users.map(user=><Score key={user.login} user={user}/>)}
+      {users.map(user=><Score key={user.login} user={user} size={size}/>)}
     </React.Fragment>
   );
 }
