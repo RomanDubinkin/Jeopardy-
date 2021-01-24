@@ -1,8 +1,10 @@
 <h1>Jeopardy</h1> 
 
-Онлайн игра-викторина с возможностью играть с соперником в режиме реального времени
+Multiplayer quiz game
 
-<strong>Используемые технологии</strong>: <br>
+![](readme-assets/game.gif)
+
+<strong>Techs</strong>: <br>
 — HTML<br>
 — CSS<br>
 — JavaScript<br>
