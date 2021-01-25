@@ -10,9 +10,9 @@ import Index from './screen/Index';
 const wsContext = React.createContext();
 
 function App() {
-  let toggle = true;
+  const [toggle, setToggle] = React.useState(true);
   let ws = new WebSocket('ws://localhost:3100');
-  ws.onclose = ()=> toggle = !toggle;
+  ws.onclose = ()=> setToggle(!toggle);
   React.useEffect(()=>ws = new WebSocket('ws://localhost:3100'), [toggle]);
   return (
     // store is a reserved word!!!!

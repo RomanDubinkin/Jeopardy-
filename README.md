@@ -1,6 +1,6 @@
 <h1>Jeopardy</h1> 
 
-Multiplayer quiz game
+Online multiplayer quiz game
 
 ![](readme-assets/game.gif)
 
@@ -11,3 +11,5 @@ Multiplayer quiz game
 — Express.js<br>
 — Node.js<br>
 — WebSocket
+
+try it at https://onlinejeopardy.herokuapp.com
