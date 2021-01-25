@@ -7,10 +7,10 @@ import Main from "./screen/Main";
 import Register from './screen/Register';
 import Login from './screen/Login';
 import Index from './screen/Index';
-const ws = new WebSocket('ws://localhost:3100');
 const wsContext = React.createContext();
 
 function App() {
+  const ws = new WebSocket('ws://localhost:3100');
 
   return (
     // store is a reserved word!!!!
